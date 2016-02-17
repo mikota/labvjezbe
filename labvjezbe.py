@@ -45,14 +45,59 @@ for j in onlyfiles:
 for i in range(len(imena)):
     imena[i]=imena[i].lower()
     #za svaki slucaj
-predali=[]
+predali,nisu,warning=[],[],[]
 for k in docs:
     a=get_docx_text(k)
     a=a.lower()
+    warn=True
     for i in range(len(imena)):
         if imena[i] in a and imena[i] not in predali:
             predali.append(imena[i])
-            i=len(imena)+1
-print "Predali su:",       
-for i in predali:
-    print i+",",
+            i=len(imena)+3
+            warn=False
+    if warn==True:
+        warning.append(k)
+if warning!=[]:
+    print " Upozorenje! Sljedeci dokumenti postoje, ali nisu potpisani:"
+    if len(warning)==1:
+        print warning[0][0].upper()+warning[0][1::],"\n"
+    else:
+        for i in warning[0:-1]:
+            zarez=","
+            if i==warning[-2]:
+                zarez=""
+            print i[0].upper()+i[1::]+zarez,
+        print "i",nisu[-1][0].upper()+nisu[-1][1::],"\n"
+print "- Ukupan broj predalih:",len(predali),"\n"
+
+nitko=""
+if predali==[]:
+    nitko="nitko\n\n"
+print "- Predali su:",nitko,
+if nitko=="":
+    if len(predali)==1:
+        print predali[0][0].upper()+predali[0][1::],"\n"
+    else:
+        for i in predali[0:-1]:
+            zarez=","
+            if i==predali[-2]:
+                zarez=""
+            print i[0].upper()+i[1::]+zarez,
+        print "i",predali[-1][0].upper()+predali[-1][1::],"\n"
+for i in imena:
+    if i not in predali:
+        nisu.append(i)
+nitko=""
+if nisu==[]:
+    nitko="nitko\n\n"
+print "- Nisu predali:",nitko,
+if nitko=="":
+    if len(nisu)==1:
+        print nisu[0][0].upper()+nisu[0][1::],"\n"
+    else:
+        for i in nisu[0:-1]:
+            zarez=","
+            if i==nisu[-2]:
+                zarez=""
+            print i[0].upper()+i[1::]+zarez,
+        print "i",nisu[-1][0].upper()+nisu[-1][1::],"\n"
